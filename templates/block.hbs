@@ -1,0 +1,175 @@
+{{#if details.results}}
+
+  <span class="p-title">{{fa-icon "file" fixedWidth=true}} Binary Analysis</span>
+
+  {{#each details.results as |result|}}
+    {{#if result.md5}}
+      <div>
+          <span class="p-key">MD5: </span>
+          <a href="{{block.userOptions.url}}/#/binary/{{result.md5}}" class="p-link">{{result.md5}} {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+      </div>
+      <div>
+        <span class="p-key">Related Process(es): </span>
+        <a href="{{block.userOptions.url}}/#/search/cb.urlver=1&cb.q.md5={{result.md5}}&sort=start%20desc&rows=10&start=0" class="p-link">Find Related {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+      </div>
+      <div>
+        <span class="p-key">File Writer(s): </span>
+        <a href="{{block.userOptions.url}}/#/search/cb.urlver=1&cb.q.filewrite_md5={{result.md5}}&sort=start%20desc&rows=10&start=0" class="p-link">Find Writers {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+      </div>
+    {{/if}}
+    {{#if result.sha256}}
+      <div>
+          <span class="p-key">SHA256: </span>
+          <span class="p-value">{{result.sha256}}</span>
+      </div>
+    {{/if}}
+    {{#if result.timestamp}}
+      <div>
+          <span class="p-key">First Seen: </span>
+          <span class="p-value">{{result.timestamp}}</span>
+      </div>
+    {{/if}}
+    {{#if result.last_seen}}
+      <div>
+          <span class="p-key">Last Seen: </span>
+          <span class="p-value">{{result.last_seen}}</span>
+      </div>
+    {{/if}}
+
+    <span class="p-title">{{fa-icon "info" fixedWidth=true}} General Info</span>
+
+    {{#if result.os_type}}
+      <div>
+          <span class="p-key">OS Type: </span>
+          <span class="p-value">{{result.os_type}}</span>
+      </div>
+    {{/if}}
+    {{#if (eq is_64bit)}}
+      <div>
+          <span class="p-key">Architecture: </span>
+          <span class="p-value">64 bit</span>
+      </div>
+      {{else}}
+      <div>
+          <span class="p-key">Architecture: </span>
+          <span class="p-value">32 bit</span>
+      </div>
+    {{/if}}
+    {{#if result.orig_mod_len}}
+      <div>
+          <span class="p-key">Size: </span>
+          <span class="p-value">{{result.orig_mod_len}} bytes</span> <a href="{{block.userOptions.url}}/api/v1/binary/{{block.entity.value}}" class="p-link">Download {{fa-icon "download" class="external-link-icon"}}</a>
+      </div>
+    {{/if}}
+
+    <span class="p-title">{{fa-icon "file-signature" fixedWidth=true}} File Signature Metadata</span>
+
+    {{#if (eq result.digsig_result "Signed")}}
+      <div>
+          <span class="p-key">Result: </span>
+          <span class="p-value" style="color:green"><b>Signed</b></span>
+      </div>
+      {{else}}
+      <div>
+          <span class="p-key">Result: </span>
+          <span class="p-value" style="color:red"><b>Unsigned</b></span>
+      </div>
+      {{/if}}
+      {{#if result.digsig_publisher}}
+        <div>
+            <span class="p-key">Publisher: </span>
+            <span class="p-value">{{result.digsig_publisher}}</span>
+        </div>
+      {{/if}}
+      {{#if result.digsig_sign_time}}
+        <div>
+            <span class="p-key">Signed Time: </span>
+            <span class="p-value">{{result.digsig_sign_time}}</span>
+        </div>
+      {{/if}}
+      {{#if result.digsig_result_code}}
+        <div>
+            <span class="p-key">Result Code: </span>
+            <span class="p-value">{{result.digsig_result_code}}</span>
+        </div>
+      {{/if}}
+
+      <span class="p-title">{{fa-icon "terminal" fixedWidth=true}} Observed Path(s)</span>
+
+      {{#each result.observed_filename as |filename index|}}
+        <h1 class="p-title">
+          Observed Path #{{inc index}}
+        </h1>
+        {{#if filename}}
+          <div>
+              <a href="{{block.userOptions.url}}/#search/cb.urlver=1&q=modload%3A%22{{filename}}%22&sort=start%20desc&rows=10" class="p-link">{{filename}} {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+          </div>
+        {{/if}}
+      {{/each}}
+
+      <span class="p-title">{{fa-icon "desktop" fixedWidth=true}} Observed Host(s)</span>
+
+      {{#each endpointTags as |tag index|}}
+        <h1 class="p-title">
+          Observed Host #{{inc index}}
+        </h1>
+        {{#if tag}}
+          <div>
+              <a href="{{block.userOptions.url}}/#search/cb.urlver=1&q=hostname%3A{{tag}}&sort=start%20desc&rows=10" class="p-link">{{tag}} {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+          </div>
+        {{/if}}
+      {{/each}}
+
+      <span class="p-title">{{fa-icon "code-branch" fixedWidth=true}} File Version Metadata</span>
+
+      {{#if result.file_desc}}
+        <div>
+            <span class="p-key">File Description: </span>
+            <span class="p-value">{{result.file_desc}}</span>
+        </div>
+      {{/if}}
+      {{#if result.file_version}}
+        <div>
+            <span class="p-key">File Version: </span>
+            <span class="p-value">{{result.file_version}}</span>
+        </div>
+      {{/if}}
+      {{#if result.original_filename}}
+        <div>
+            <span class="p-key">Original Filename: </span>
+            <span class="p-value">{{result.original_filename}}</span>
+        </div>
+      {{/if}}
+      {{#if result.internal_name}}
+        <div>
+            <span class="p-key">Internal Name: </span>
+            <span class="p-value">{{result.internal_name}}</span>
+        </div>
+      {{/if}}
+      {{#if result.company_name}}
+        <div>
+            <span class="p-key">Company Name: </span>
+            <span class="p-value">{{result.company_name}}</span>
+        </div>
+      {{/if}}
+      {{#if result.product_name}}
+        <div>
+            <span class="p-key">Product Name: </span>
+            <span class="p-value">{{result.product_name}}</span>
+        </div>
+      {{/if}}
+      {{#if result.product_version}}
+        <div>
+            <span class="p-key">Product Version: </span>
+            <span class="p-value">{{result.product_version}}</span>
+        </div>
+      {{/if}}
+      {{#if result.legal_copyright}}
+        <div>
+            <span class="p-key">Legal Copyright: </span>
+            <span class="p-value">{{result.legal_copyright}}</span>
+        </div>
+      {{/if}}
+    {{/each}}
+
+{{/if}}

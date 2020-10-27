@@ -1,0 +1,20 @@
+{{#if details.total_results}}
+  <span {{on "click" (optional this.scrollToIntegration)}} class="integration-summary-tag integration-background-color integration-border-color">
+     <span class="acronym integration-text-bold-color">{{block.acronym}}</span>
+     <span class="integration-text-color">Seen on: {{details.total_results}} machine(s)</span>
+  </span>
+{{/if}}
+
+{{#each details.results as |result|}}
+{{#if (eq result.digsig_result "Signed")}}
+  <span {{on "click" (optional this.scrollToIntegration)}} class="integration-summary-tag noncritical-tag noncritical-bold">
+     <span class="acronym color=#fff">{{block.acronym}}</span>
+     {{fa-icon "check-square" classNames="noncritical-bold" fixedWidth=true}} Hash has been verified
+  </span>
+{{else}}
+  <span {{on "click" (optional this.scrollToIntegration)}} class="integration-summary-tag critical-tag critical-bold">
+     <span class="acronym integration-text-bold-color">{{block.acronym}}</span>
+    {{fa-icon "exclamation-triangle" classNames="critical-bold" fixedWidth=true}}Hash is not verified
+  </span>
+{{/if}}
+{{/each}}
