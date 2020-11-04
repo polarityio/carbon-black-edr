@@ -47,7 +47,7 @@ function doLookup(entities, options, cb) {
   let lookupResults = [];
   let tasks = [];
 
-  Logger.debug(entities);
+  Logger.debug({ entities }, 'Entities');
   entities.forEach((entity) => {
     let requestOptions = {
       method: 'GET',
@@ -59,17 +59,17 @@ function doLookup(entities, options, cb) {
     };
 
     if (entity.isMD5) {
-      requestOptions.qs = {q: "md5:" + entity.value}
+      requestOptions.qs = { q: 'md5:' + entity.value };
     } else if (entity.isSHA256) {
-      requestOptions.qs = {q: "sha256:" + entity.value}
+      requestOptions.qs = { q: 'sha256:' + entity.value };
     } else {
       return;
     }
 
     Logger.trace({ requestOptions }, 'Request Options');
 
-    tasks.push(function(done) {
-      requestWithDefaults(requestOptions, function(error, res, body) {
+    tasks.push(function (done) {
+      requestWithDefaults(requestOptions, function (error, res, body) {
         Logger.trace({ body, status: res.statusCode });
         let processedResult = handleRestError(error, entity, res, body);
 
@@ -91,7 +91,13 @@ function doLookup(entities, options, cb) {
     }
 
     results.forEach((result) => {
-      if (result.body === null || result.body.length === 0 || result.body.results === null || result.body.results.length === 0 || result.body.total_results === 0) {
+      if (
+        !result.body ||
+        result.body.length === 0 ||
+        !result.body.results ||
+        result.body.results.length === 0 ||
+        result.body.total_results === 0
+      ) {
         lookupResults.push({
           entity: result.entity,
           data: null

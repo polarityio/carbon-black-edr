@@ -1,12 +1,11 @@
 {{#if details.results}}
-
   <span class="p-title">{{fa-icon "file" fixedWidth=true}} Binary Analysis</span>
 
   {{#each details.results as |result|}}
     {{#if result.md5}}
       <div>
-          <span class="p-key">MD5: </span>
-          <a href="{{block.userOptions.url}}/#/binary/{{result.md5}}" class="p-link">{{result.md5}} {{fa-icon "external-link-square" class="external-link-icon"}}</a>
+        <span class="p-key">MD5: </span>
+        <a href="{{block.userOptions.url}}/#/binary/{{result.md5}}" class="p-link">{{result.md5}} {{fa-icon "external-link-square" class="external-link-icon"}}</a>
       </div>
       <div>
         <span class="p-key">Related Process(es): </span>
@@ -171,5 +170,4 @@
         </div>
       {{/if}}
     {{/each}}
-
 {{/if}}
