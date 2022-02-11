@@ -70,7 +70,7 @@ function doLookup(entities, options, cb) {
 
     tasks.push(function (done) {
       requestWithDefaults(requestOptions, function (error, res, body) {
-        Logger.trace({ body, status: res.statusCode });
+        Logger.trace({ body, status: res && res.statusCode });
         let processedResult = handleRestError(error, entity, res, body);
 
         if (processedResult.error) {
@@ -121,9 +121,9 @@ function doLookup(entities, options, cb) {
 function handleRestError(error, entity, res, body) {
   let result;
 
-  if (error) {
+  if (error || !res) {
     return {
-      error: error,
+      error: error || "No Response or Error from request. Request result empty.",
       detail: 'HTTP Request Error'
     };
   }
