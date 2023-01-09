@@ -1,0 +1,60 @@
+{
+  "name": "Carbon Black EDR (Endpoint Detection and Response)",
+  "acronym": "CBEDR",
+  "description": "Carbon Black EDR is a market-leading endpoint detection and response solution, which provides security operation centers (SOCs) and incident response (IR) teams the ability to proactively hunt threats and respond to attacks faster, while scaling to the largest of enterprises.",
+  "entityTypes": [
+    "MD5",
+    "SHA256"
+  ],
+  "styles": [
+    "./styles/style.less"
+  ],
+  "block": {
+    "component": {
+      "file": "./components/block.js"
+    },
+    "template": {
+      "file": "./templates/block.hbs"
+    }
+  },
+  "summary": {
+    "component": {
+      "file": "./components/summary.js"
+    },
+    "template": {
+      "file": "./templates/summary.hbs"
+    }
+  },
+  "request": {
+    "cert": "",
+    "key": "",
+    "passphrase": "",
+    "ca": "",
+    "proxy": "",
+    "rejectUnauthorized": true
+  },
+  "logging": {
+    "level": "info"
+  },
+  "onDemandOnly": false,
+  "options": [
+    {
+      "key": "url",
+      "name": "Carbon Black EDR Instance URL",
+      "description": "The URL of the Carbon Black EDR instance you would like to connect to (including http:// or https://)",
+      "default": "",
+      "type": "text",
+      "userCanEdit": true,
+      "adminOnly": false
+    },
+    {
+      "key": "apiKey",
+      "name": "API Key",
+      "description": "Valid API Key you would like to use to authenticate to your Carbon Black EDR instance",
+      "default": "",
+      "type": "password",
+      "userCanEdit": true,
+      "adminOnly": false
+    }
+  ]
+}
