@@ -2,13 +2,9 @@
   "name": "Carbon Black EDR (Endpoint Detection and Response)",
   "acronym": "CBEDR",
   "description": "Carbon Black EDR is a market-leading endpoint detection and response solution, which provides security operation centers (SOCs) and incident response (IR) teams the ability to proactively hunt threats and respond to attacks faster, while scaling to the largest of enterprises.",
-  "entityTypes": [
-    "MD5",
-    "SHA256"
-  ],
-  "styles": [
-    "./styles/style.less"
-  ],
+  "entityTypes": ["MD5", "SHA256"],
+  "defaultColor": "light-purple",
+  "styles": ["./styles/style.less"],
   "block": {
     "component": {
       "file": "./components/block.js"
